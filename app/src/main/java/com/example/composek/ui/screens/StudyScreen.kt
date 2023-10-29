@@ -2,11 +2,8 @@ package com.example.composek.ui.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -14,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,22 +25,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
+import com.example.composek.ui.components.ArticleItem
 import com.example.composek.ui.components.NotificationContent
-import com.example.composek.ui.components.SwiperContent
 import com.example.composek.ui.components.TopAppBar
+import com.example.composek.viewmodel.ArticleViewModel
 import com.example.composek.viewmodel.MainViewModel
-import com.google.accompanist.pager.HorizontalPager
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun StudyScreen(vm: MainViewModel = viewModel()) {
+fun StudyScreen(vm: MainViewModel = viewModel(), articleVM: ArticleViewModel = viewModel()) {
     Column {
         // 标题栏
         TopAppBar() {
@@ -68,8 +62,11 @@ fun StudyScreen(vm: MainViewModel = viewModel()) {
                     )
 
                     Text(
-                        text = "搜索感兴趣的资讯或课程", color = Color.White, fontSize = 12.sp,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis
+                        text = "搜索感兴趣的资讯或课程",
+                        color = Color.White,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
@@ -80,7 +77,8 @@ fun StudyScreen(vm: MainViewModel = viewModel()) {
             Text(text = "36%", fontSize = 12.sp, color = Color.White)
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
-                imageVector = Icons.Default.Notifications, contentDescription = null,
+                imageVector = Icons.Default.Notifications,
+                contentDescription = null,
                 tint = Color.White
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -90,13 +88,16 @@ fun StudyScreen(vm: MainViewModel = viewModel()) {
         TabRow(selectedTabIndex = vm.categoryIndex, containerColor = Color(0x66149ee7)) {
             vm.categories.forEachIndexed { index, category ->
                 Tab(
-                    selected = vm.categoryIndex == index, onClick = {
+                    selected = vm.categoryIndex == index,
+                    onClick = {
                         vm.updateCategoryIndex(index)
-                    }, selectedContentColor = Color(0xff149ee7),
+                    },
+                    selectedContentColor = Color(0xff149ee7),
                     unselectedContentColor = Color(0xff666666)
                 ) {
                     Text(
-                        text = category.title, modifier = Modifier.padding(vertical = 8.dp),
+                        text = category.title,
+                        modifier = Modifier.padding(vertical = 8.dp),
                         fontSize = 14.sp
                     )
                 }
@@ -105,29 +106,28 @@ fun StudyScreen(vm: MainViewModel = viewModel()) {
         }
 
         // 分类标签2
-        TabRow(
-            selectedTabIndex = vm.typeIndex,
+        TabRow(selectedTabIndex = vm.typeIndex,
             containerColor = Color.Transparent,
             contentColor = Color(0xff666666),
             indicator = {},
-            divider = {}
-        ) {
+            divider = {}) {
             vm.types.forEachIndexed { index, dataType ->
-                LeadingIconTab(
-                    selected = vm.typeIndex == index, onClick = {
+                LeadingIconTab(selected = vm.typeIndex == index,
+                    onClick = {
                         vm.updateTypeIndex(index)
-                    }, selectedContentColor = Color(0xff149ee7),
+                    },
+                    selectedContentColor = Color(0xff149ee7),
                     unselectedContentColor = Color(0xff666666),
                     icon = {
                         Icon(imageVector = dataType.icon, contentDescription = null)
                     },
                     text = {
                         Text(
-                            text = dataType.title, modifier = Modifier.padding(vertical = 8.dp),
+                            text = dataType.title,
+                            modifier = Modifier.padding(vertical = 8.dp),
                             fontSize = 16.sp
                         )
-                    }
-                )
+                    })
             }
         }
 
@@ -139,6 +139,13 @@ fun StudyScreen(vm: MainViewModel = viewModel()) {
 
             // 通知公告
             item { NotificationContent(vm) }
+
+            // 新闻列表
+//            items(articleVM.list.size) { index ->
+//                ArticleItem(articleEntity = articleVM.list[index])
+//            }
+
+            // 视频列表
         }
 
 
