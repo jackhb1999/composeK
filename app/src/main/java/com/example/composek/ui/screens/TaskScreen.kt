@@ -1,0 +1,18 @@
+package com.example.composek.ui.screens
+
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+
+@Composable
+fun TaskScreen() {
+    Text(text = "任务页")
+
+}
+
+
+@Preview
+@Composable
+fun TaskScreenPreview() {
+    TaskScreen()
+}
