@@ -23,6 +23,9 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
+// 标题栏的高度
+val appBarHeight = 56.dp
+
 @Composable
 fun TopAppBar(content: @Composable () -> Unit) {
 
@@ -31,8 +34,7 @@ fun TopAppBar(content: @Composable () -> Unit) {
         systemUiController.setStatusBarColor(Color.Transparent)
     }
 
-    // 标题栏的高度
-    val appBarHeight = 56.dp
+
 
     // 系统状态栏的高度 px 转为 dp
     val statusBarHeightDp = with(LocalDensity.current) {

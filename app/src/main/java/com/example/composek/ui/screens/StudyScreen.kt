@@ -33,12 +33,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.composek.ui.components.ArticleItem
 import com.example.composek.ui.components.NotificationContent
 import com.example.composek.ui.components.TopAppBar
+import com.example.composek.ui.components.VideoItem
 import com.example.composek.viewmodel.ArticleViewModel
 import com.example.composek.viewmodel.MainViewModel
+import com.example.composek.viewmodel.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun StudyScreen(vm: MainViewModel = viewModel(), articleVM: ArticleViewModel = viewModel()) {
+fun StudyScreen(
+    vm: MainViewModel = viewModel(), articleVM: ArticleViewModel = viewModel(),
+    videoVM: VideoViewModel = viewModel()
+) {
     Column {
         // 标题栏
         TopAppBar() {
@@ -140,12 +145,20 @@ fun StudyScreen(vm: MainViewModel = viewModel(), articleVM: ArticleViewModel = v
             // 通知公告
             item { NotificationContent(vm) }
 
-            // 新闻列表
-//            items(articleVM.list.size) { index ->
-//                ArticleItem(articleEntity = articleVM.list[index])
-//            }
+            if (vm.typeIndex == 0) {
+                // 新闻列表
+                items(articleVM.list.size) { index ->
+                    ArticleItem(articleEntity = articleVM.list[index])
+                }
+            } else {
+                // 视频列表
+                items(videoVM.list.size) { index ->
+                    VideoItem(videoEntity = videoVM.list[index])
+                }
 
-            // 视频列表
+            }
+
+
         }
 
 

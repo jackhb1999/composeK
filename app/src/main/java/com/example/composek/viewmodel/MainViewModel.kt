@@ -41,8 +41,10 @@ class MainViewModel : ViewModel() {
         )
     )
 
+    // 当前类型下标
     var typeIndex by mutableStateOf(0)
         private set
+
 
     fun updateTypeIndex(index: Int) {
         typeIndex = index
